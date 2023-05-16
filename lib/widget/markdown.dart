@@ -122,14 +122,15 @@ class _MarkdownWidgetState extends State<MarkdownWidget> {
         isForward = direction == ScrollDirection.forward;
         return true;
       },
-      child: ListView.builder(
-        shrinkWrap: widget.shrinkWrap,
-        physics: widget.physics,
-        controller: controller,
-        itemBuilder: (ctx, index) => wrapByAutoScroll(index,
-            wrapByVisibilityDetector(index, _widgets[index]), controller),
-        itemCount: _widgets.length,
-        padding: widget.padding,
+      child: IntrinsicWidth(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (int index = 0; index < _widgets.length; index++)
+              wrapByAutoScroll(index,
+                  wrapByVisibilityDetector(index, _widgets[index]), controller)
+          ],
+        ),
       ),
     );
     return widget.selectable
